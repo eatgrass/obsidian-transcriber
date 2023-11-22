@@ -5,7 +5,7 @@ import Worker from 'transcriber.worker.ts'
 export default class TranscriberPlugin extends Plugin {
     async onload() {
         let worker = Worker()
-        worker.onmessage = (e:any) => console.log(e);
+        worker.postMessage(['hello', 'world'])
     }
 
     onunload() {}
