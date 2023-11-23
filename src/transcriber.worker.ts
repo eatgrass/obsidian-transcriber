@@ -1,8 +1,10 @@
 import { pipeline, env, type Pipeline } from '@xenova/transformers'
+env.allowLocalModels = false
+env.backends.onnx.wasm = {}
 
-self.onmessage = async ({ data }) => {
-    console.log(data)
-}
+// env.allowRemoteModels = true
+
+console.log("worker loaded")
 
 class PipelineFactory {
     static task: string
@@ -35,6 +37,8 @@ class PipelineFactory {
 }
 
 self.onmessage = async ({ data }) => {
+    console.log(data)
+
     let transcript = await transcribe(
         data.audio,
         data.model,
@@ -135,6 +139,7 @@ const transcribe = async (
                 force_full_sequences: false,
             },
         )
+        console.log(data)
 
         self.postMessage({
             status: 'update',
